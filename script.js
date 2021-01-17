@@ -1,6 +1,8 @@
 var searchTerm = $("#searchTerm");
 var searchButton = $("#searchButton");
+var currentWeather = $(".currentWeather");
 
+// on click, current weather api searched 
 searchButton.on("click", function (event) {
     event.preventDefault();
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm.val().trim() + "&appid=a0eab1d4c4a0b9a91854301eece7ccae"
@@ -9,6 +11,29 @@ searchButton.on("click", function (event) {
         method: "GET"
     }).then(function (response) {
         console.log(response);
+
+        // getting city name
+        var cityName = $("<h2>");
+        cityName.text(response.name);
+        $(".currentWeather").append(cityName);
+
+        // getting current temp, converting to celcius, displaying to one decimal point
+        var currentTemp = $("<p>");
+        currentTemp.text(response.main.temp - 273.15);
+        var temp = (Math.round(currentTemp.text() * 100) / 100).toFixed(1);
+        $(".currentWeather").append("Temperature: " + temp);
+
+        // getting humidity
+        // response.main.humidity 
+        var humidity = $("<p>");
+        humidity.text(response.main.humidity);
+        $(".currentWeather").append("Humidity: " + humidity.text());
+
+        // getting wind speed
+        // response.wind.speed
+        var windSpeed = $("<p>");
+        windSpeed.text(response.wind.speed);
+        $(".currentWeather").append("Wind Speed: " + windSpeed.text() + " MPH");
     });
 });
 
