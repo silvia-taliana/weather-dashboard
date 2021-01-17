@@ -8,7 +8,7 @@ searchButton.on("click", function (event) {
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm.val().trim() + "&appid=a0eab1d4c4a0b9a91854301eece7ccae"
     $.ajax({
         url: queryURL,
-        method: "GET"
+        method: "GET",
     }).then(function (response) {
         console.log(response);
 
@@ -24,18 +24,39 @@ searchButton.on("click", function (event) {
         $(".currentWeather").append("Temperature: " + temp);
 
         // getting humidity
-        // response.main.humidity 
         var humidity = $("<p>");
         humidity.text(response.main.humidity);
         $(".currentWeather").append("Humidity: " + humidity.text());
 
         // getting wind speed
-        // response.wind.speed
         var windSpeed = $("<p>");
         windSpeed.text(response.wind.speed);
         $(".currentWeather").append("Wind Speed: " + windSpeed.text() + " MPH");
+
+        // UV index 
+        var lon = response.coord.lon;
+        var lat = response.coord.lat;
+
+        var UVRating = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=a0eab1d4c4a0b9a91854301eece7ccae"
+        $.ajax({
+            url: UVRating,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+        });
+
+        // 5 Day forecast
+        var futureURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm.val().trim() + "&appid=a0eab1d4c4a0b9a91854301eece7ccae"
+        $.ajax({
+            url: futureURL,
+            method: "GET",
+        }).then(function (response) {
+            console.log(response)
+        });
+
     });
 });
+
 
 // pseudo code:
 // 1. get data from api using ajax
