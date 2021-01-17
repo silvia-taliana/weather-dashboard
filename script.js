@@ -5,7 +5,7 @@ var currentWeather = $(".currentWeather");
 // on click, current weather api searched 
 searchButton.on("click", function (event) {
     event.preventDefault();
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm.val().trim() + "&appid=a0eab1d4c4a0b9a91854301eece7ccae"
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm.val().trim() + "&units=metric&appid=a0eab1d4c4a0b9a91854301eece7ccae"
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -17,16 +17,16 @@ searchButton.on("click", function (event) {
         cityName.text(response.name);
         $(".currentWeather").append(cityName);
 
-        // getting current temp, converting to celcius, displaying to one decimal point
+        // getting current temp displaying to one decimal point
         var currentTemp = $("<p>");
-        currentTemp.text(response.main.temp - 273.15);
+        currentTemp.text(response.main.temp);
         var temp = (Math.round(currentTemp.text() * 100) / 100).toFixed(1);
-        $(".currentWeather").append("Temperature: " + temp);
+        $(".currentWeather").append("Temperature: " + temp + "°C");
 
         // getting humidity
         var humidity = $("<p>");
         humidity.text(response.main.humidity);
-        $(".currentWeather").append("Humidity: " + humidity.text());
+        $(".currentWeather").append("Humidity: " + humidity.text() + "%");
 
         // getting wind speed
         var windSpeed = $("<p>");
@@ -42,18 +42,32 @@ searchButton.on("click", function (event) {
             url: UVRating,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
+            var uvIndex = $("<p>");
+            uvIndex.text(response.value);
+            $(".currentWeather").append("UV Index: " + uvIndex.text());
         });
 
         // 5 Day forecast
-        var futureURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm.val().trim() + "&appid=a0eab1d4c4a0b9a91854301eece7ccae"
+        var futureURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm.val().trim() + "&units=metric&appid=a0eab1d4c4a0b9a91854301eece7ccae"
         $.ajax({
             url: futureURL,
             method: "GET",
         }).then(function (response) {
             console.log(response)
-        });
 
+            // temperature
+            for (var i = 0; i < 5; i++) {
+                var futureTemp = $("<p>");
+                futureTemp.text(response.list[i].main.temp);
+                var temps = (Math.round(futureTemp.text() * 100) / 100).toFixed(1);
+                $(".futureWeather").append("Temperature: " + temps + "°C");
+
+                //wind speed
+                var futureWind = $("<p>");
+                futureWind.text(response.list[i].wind.speed);
+                $(".futureWeather").append("Wind Speed: " + futureWind.text() + " MPH");
+            }
+        });
     });
 });
 
