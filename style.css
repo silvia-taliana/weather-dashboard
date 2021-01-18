@@ -1,0 +1,9 @@
+/* classes for colour coding uv index */
+.high {
+    background-color: red;
+}
+
+.low {
+    background-color: green;
+}
+

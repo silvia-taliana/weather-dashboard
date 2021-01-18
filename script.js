@@ -12,10 +12,18 @@ searchButton.on("click", function (event) {
     }).then(function (response) {
         console.log(response);
 
-        // getting city name
+        // getting city name and storing to local storage
         var cityName = $("<h2>");
         cityName.text(response.name);
+        localStorage.setItem("searchHistory", JSON.stringify(cityName.text()));
         $(".currentWeather").append(cityName);
+
+        // getting icon
+        // var icon = response.weather[0].icon
+        // var iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png"
+        // var icon = $("<h2>");
+        // icon.text(response.weather[0].icon);
+        // $(".currentWeather").append(icon);
 
         // getting current temp displaying to one decimal point
         var currentTemp = $("<p>");
@@ -44,6 +52,12 @@ searchButton.on("click", function (event) {
         }).then(function (response) {
             var uvIndex = $("<p>");
             uvIndex.text(response.value);
+            // if (uvIndex.text() >= 8) {
+            //     uvIndex.addClass("high");
+            // }
+            // else {
+            //     uvIndex.addClass("low");
+            // };
             $(".currentWeather").append("UV Index: " + uvIndex.text());
         });
 
@@ -71,6 +85,11 @@ searchButton.on("click", function (event) {
     });
 });
 
+// retrieving search history and showing on page 
+var search = $("<p>");
+search = JSON.parse(localStorage.getItem("searchHistory"));
+$(".searchHistory").prepend(search);
+
 
 // pseudo code:
 // 1. get data from api using ajax
@@ -83,3 +102,4 @@ searchButton.on("click", function (event) {
 // 5. create a list and store searched city in there
 // 6. make that list a button so the city can be searched again
 // 7. store searches in local storage and redisplay to screen upon refreshing
+// if time, create toggle buttons for different units
