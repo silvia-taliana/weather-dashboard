@@ -1,6 +1,7 @@
 var searchTerm = $("#searchTerm");
 var searchButton = $("#searchButton");
 var currentWeather = $(".currentWeather");
+// var cityList = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
 // on click, current weather api searched 
 searchButton.on("click", function (event) {
@@ -15,6 +16,7 @@ searchButton.on("click", function (event) {
         // getting city name and storing to local storage
         var cityName = $("<h2>");
         cityName.text(response.name);
+        // cityList.push(cityName.text());
         localStorage.setItem("searchHistory", JSON.stringify(cityName.text()));
         $(".currentWeather").append(cityName);
 
@@ -24,6 +26,7 @@ searchButton.on("click", function (event) {
         // var icon = $("<h2>");
         // icon.text(response.weather[0].icon);
         // $(".currentWeather").append(icon);
+        // add image tag and source
 
         // getting current temp displaying to one decimal point
         var currentTemp = $("<p>");
@@ -51,14 +54,14 @@ searchButton.on("click", function (event) {
             method: "GET"
         }).then(function (response) {
             var uvIndex = $("<p>");
-            uvIndex.text(response.value);
-            // if (uvIndex.text() >= 8) {
-            //     uvIndex.addClass("high");
-            // }
-            // else {
-            //     uvIndex.addClass("low");
-            // };
-            $(".currentWeather").append("UV Index: " + uvIndex.text());
+            uvIndex.text("UV Index: " + response.value);
+            if (uvIndex.text() >= 8) {
+                uvIndex.addClass("high");
+            }
+            else {
+                uvIndex.addClass("low");
+            };
+            $(".currentWeather").append(uvIndex);
         });
 
         // 5 Day forecast
@@ -86,9 +89,11 @@ searchButton.on("click", function (event) {
 });
 
 // retrieving search history and showing on page 
-var search = $("<p>");
+
+var search = $("<li>");
 search = JSON.parse(localStorage.getItem("searchHistory"));
-$(".searchHistory").prepend(search);
+$(".cityList").prepend(search);
+// $(".cityList").prepend(cityList);
 
 
 // pseudo code:
