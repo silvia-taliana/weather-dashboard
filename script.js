@@ -22,12 +22,11 @@ searchButton.on("click", function (event) {
         $(".currentWeather").append(cityName);
 
         // getting icon
-        // var icon = response.weather[0].icon
-        // var iconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png"
-        // var icon = $("<h2>");
-        // icon.text(response.weather[0].icon);
-        // $(".currentWeather").append(icon);
-        // add image tag and source
+        var icon = $("<img />").attr({
+            "id": "icon",
+            "src": "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png",
+        });
+        $(".currentWeather").append(icon);
 
         // getting current temp displaying to one decimal point
         var currentTemp = $("<p>");
