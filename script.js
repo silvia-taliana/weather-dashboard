@@ -57,8 +57,17 @@ searchButton.on("click", function (event) {
             var uvSpan = $("<span>");
             uvIndex.text("UV Index: ");
             uvSpan.text(response.value);
-            if (response.value >= 8) {
+            if (response.value >= 11) {
+                uvSpan.addClass("extreme");
+            }
+            else if (response.value >= 8) {
+                uvSpan.addClass("veryHigh");
+            }
+            else if (response.value >= 6) {
                 uvSpan.addClass("high");
+            }
+            else if (response.value >= 3) {
+                uvSpan.addClass("moderate");
             }
             else {
                 uvSpan.addClass("low");

@@ -1,6 +1,18 @@
 /* classes for colour coding uv index */
-.high {
+.extreme {
+    background-color: rgb(192, 13, 192);
+}
+
+.veryHigh {
     background-color: red;
+}
+
+.high {
+    background-color: rgb(255, 123, 0);
+}
+
+.moderate {
+    background-color: yellow;
 }
 
 .low {
