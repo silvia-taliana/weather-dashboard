@@ -82,6 +82,13 @@ searchButton.on("click", function (event) {
                 var temps = (Math.round(futureTemp.text() * 100) / 100).toFixed(1);
                 $(".futureWeather").append("Temperature: " + temps + "°C");
 
+                // getting icon
+                var icon = $("<img />").attr({
+                    "id": "icon",
+                    "src": "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png",
+                });
+                $(".futureWeather").append(icon);
+
                 //wind speed
                 var futureWind = $("<p>");
                 futureWind.text(response.list[i].wind.speed);
@@ -95,6 +102,7 @@ searchButton.on("click", function (event) {
 // retrieving search history and showing on page 
 function displayButtons() {
     for (var i = 0; i < cityList.length; i++) {
+        localStorage.clear();
         var search = $("<button>");
         search.text(cityList[i]);
         $(".cityList").prepend(search);
