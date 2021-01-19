@@ -1,7 +1,8 @@
 var searchTerm = $("#searchTerm");
 var searchButton = $("#searchButton");
 var currentWeather = $(".currentWeather");
-// var cityList = JSON.parse(localStorage.getItem("searchHistory")) || [];
+var cityList = JSON.parse(localStorage.getItem("searchHistory")) || [];
+var searchHistory;
 
 // on click, current weather api searched 
 searchButton.on("click", function (event) {
@@ -16,8 +17,8 @@ searchButton.on("click", function (event) {
         // getting city name and storing to local storage
         var cityName = $("<h2>");
         cityName.text(response.name);
-        // cityList.push(cityName.text());
-        localStorage.setItem("searchHistory", JSON.stringify(cityName.text()));
+        cityList.push(cityName.text());
+        localStorage.setItem("searchHistory", JSON.stringify(cityList));
         $(".currentWeather").append(cityName);
 
         // getting icon
@@ -54,13 +55,16 @@ searchButton.on("click", function (event) {
             method: "GET"
         }).then(function (response) {
             var uvIndex = $("<p>");
-            uvIndex.text("UV Index: " + response.value);
-            if (uvIndex.text() >= 8) {
-                uvIndex.addClass("high");
+            var uvSpan = $("<span>");
+            uvIndex.text("UV Index: ");
+            uvSpan.text(response.value);
+            if (response.value >= 8) {
+                uvSpan.addClass("high");
             }
             else {
-                uvIndex.addClass("low");
+                uvSpan.addClass("low");
             };
+            uvIndex.append(uvSpan);
             $(".currentWeather").append(uvIndex);
         });
 
@@ -86,13 +90,19 @@ searchButton.on("click", function (event) {
             }
         });
     });
+    displayButtons();
 });
 
 // retrieving search history and showing on page 
+function displayButtons() {
+    for (var i = 0; i < cityList.length; i++) {
+        var search = $("<button>");
+        search.text(cityList[i]);
+        $(".cityList").prepend(search);
+    }
+};
 
-var search = $("<li>");
-search = JSON.parse(localStorage.getItem("searchHistory"));
-$(".cityList").prepend(search);
+
 // $(".cityList").prepend(cityList);
 
 
