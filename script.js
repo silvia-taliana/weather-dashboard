@@ -2,7 +2,6 @@ var searchTerm = $("#searchTerm");
 var searchButton = $("#searchButton");
 var currentWeather = $(".currentWeather");
 var cityList = JSON.parse(localStorage.getItem("searchHistory")) || [];
-var searchHistory;
 
 // on click, current weather api searched 
 searchButton.on("click", function (event) {
@@ -20,6 +19,10 @@ searchButton.on("click", function (event) {
         cityList.push(cityName.text());
         localStorage.setItem("searchHistory", JSON.stringify(cityList));
         $(".currentWeather").append(cityName);
+
+        // setting date and time using moment.js library
+        let m = moment().format('MMMM Do YYYY');
+        $(".todaysDate").text(m);
 
         // getting icon
         var icon = $("<img />").attr({
@@ -84,42 +87,55 @@ searchButton.on("click", function (event) {
         }).then(function (response) {
             console.log(response)
 
-            // temperature
-            for (var i = 0; i < 5; i++) {
-                var futureTemp = $("<p>");
-                futureTemp.text(response.list[i].main.temp);
-                var temps = (Math.round(futureTemp.text() * 100) / 100).toFixed(1);
-                $(".futureWeather").append("Temperature: " + temps + "°C");
+            for (var i = 0; i < response.list.length; i++) {
+                // Date 
+                let hour = moment(response.list[i].dt_txt);
+                if (hour.hour() == 12) {
+                    let date = moment(response.list[i].dt_txt);
+                    $(".futureDates").append(date.format('MMMM Do YYYY'));
 
-                // getting icon
-                var icon = $("<img />").attr({
-                    "id": "icon",
-                    "src": "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png",
-                });
-                $(".futureWeather").append(icon);
+                    // temperature
+                    var futureTemp = $("<p>");
+                    futureTemp.text(response.list[i].main.temp);
+                    var temps = (Math.round(futureTemp.text() * 100) / 100).toFixed(1);
+                    $(".futureWeather").append("Temperature: " + temps + "°C");
 
-                //wind speed
-                var futureWind = $("<p>");
-                futureWind.text(response.list[i].wind.speed);
-                $(".futureWeather").append("Wind Speed: " + futureWind.text() + " MPH");
+                    // getting icon
+                    var icon = $("<img />").attr({
+                        "id": "icon",
+                        "src": "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png",
+                    });
+                    $(".futureWeather").append(icon);
+
+                    //wind speed
+                    var futureWind = $("<p>");
+                    futureWind.text(response.list[i].wind.speed);
+                    $(".futureWeather").append("Wind Speed: " + futureWind.text() + " MPH");
+
+                }
             }
         });
     });
-    displayButtons();
 });
 
-// retrieving search history and showing on page 
+// retrieving search history and showing on page
+displayButtons();
 function displayButtons() {
     for (var i = 0; i < cityList.length; i++) {
         localStorage.clear();
         var search = $("<button>");
         search.text(cityList[i]);
+        // console.log(search.text(cityList[i]));
+
+        // if (cityList[i] === search.text(cityList[i])) {
+        //     return
+        // }
+        // else {
         $(".cityList").prepend(search);
+        // }
+        // console.log(cityList[i]);
     }
 };
-
-
-// $(".cityList").prepend(cityList);
 
 
 // pseudo code:
