@@ -35,7 +35,7 @@ searchButton.on("click", function (event) {
         });
         $(".currentWeather h2").append(icon);
 
-        // getting current temp displaying to one decimal point
+        // getting current temp
         var currentTemp = $("<p>");
         currentTemp.text("Temperature: " + response.main.temp + "°C");
         $(".currentWeather").append(currentTemp);
