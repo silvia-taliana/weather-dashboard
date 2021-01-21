@@ -8,46 +8,46 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Weather Dashboard</title>
 </head>
 
 <body>
     <header>
-        <h1>Weather Dashboard</h1>
+        <h1>WEATHER DASHBOARD</h1>
     </header>
 
     <main>
-        <!-- search box -->
-        <div>
-            <form id="searchForm">
-                <div class="form-group">
-                    <label for="search-term">Search for a city</label>
-                    <input type="text" class="form-control" id="searchTerm">
-                </div>
-                <!-- search button -->
-                <div>
-                    <button type="submit" class="btn btn-light" id="searchButton"><i
-                            class="fas fa-search-location"></i></button>
-                </div>
-            </form>
-        </div>
+        <div class="container">
+            <!-- search box -->
+            <div id="searchBox">
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="search-term">Search for a city</label>
+                        <input type="text" class="form-control" id="searchTerm">
+                        <!-- search button -->
+                        <button type="submit" class="btn btn-light" id="searchButton"><i
+                                class="fas fa-search-location"></i></button>
+                    </div>
+                </form>
+            </div>
 
-        <!-- search history -->
-        <div class="cityList">
-            <!-- <button class=cityList></button> -->
-        </div>
+            <!-- display box today only -->
+            <div class="currentWeather">
+            </div>
 
-        <!-- display box today only -->
-        <div class="currentWeather">
-            <h2 class="todaysDate"></h2>
-        </div>
+            <!-- search history -->
+            <div class="cityList">
+            </div>
 
-        <!-- display box 5 day forecast -->
-        <div class="futureWeather">
-            <h2 class="futureDates"></h2>
-        </div>
+            <!-- display box 5 day forecast -->
+            <div class="futureWeather">
+            </div>
 
+        </div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

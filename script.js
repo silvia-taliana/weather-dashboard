@@ -13,6 +13,9 @@ searchButton.on("click", function (event) {
     }).then(function (response) {
         console.log(response);
 
+        // unhiding current weather display
+        $(".currentWeather").css("display", "block");
+
         // getting city name and storing to local storage
         var cityName = $("<h2>");
         cityName.text(response.name);
@@ -21,31 +24,31 @@ searchButton.on("click", function (event) {
         $(".currentWeather").append(cityName);
 
         // setting date and time using moment.js library
-        let m = moment().format('MMMM Do YYYY');
-        $(".todaysDate").text(m);
+        let date = $("<span>");
+        date.text(" " + moment().format('MMM Do YYYY'));
+        $(".currentWeather h2").append(date);
 
         // getting icon
         var icon = $("<img />").attr({
             "id": "icon",
             "src": "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png",
         });
-        $(".currentWeather").append(icon);
+        $(".currentWeather h2").append(icon);
 
         // getting current temp displaying to one decimal point
         var currentTemp = $("<p>");
-        currentTemp.text(response.main.temp);
-        var temp = (Math.round(currentTemp.text() * 100) / 100).toFixed(1);
-        $(".currentWeather").append("Temperature: " + temp + "°C");
+        currentTemp.text("Temperature: " + response.main.temp + "°C");
+        $(".currentWeather").append(currentTemp);
 
         // getting humidity
         var humidity = $("<p>");
-        humidity.text(response.main.humidity);
-        $(".currentWeather").append("Humidity: " + humidity.text() + "%");
+        humidity.text("Humidity: " + response.main.humidity + "%");
+        $(".currentWeather").append(humidity);
 
         // getting wind speed
         var windSpeed = $("<p>");
-        windSpeed.text(response.wind.speed);
-        $(".currentWeather").append("Wind Speed: " + windSpeed.text() + " MPH");
+        windSpeed.text("Wind Speed: " + response.wind.speed + " MPH");
+        $(".currentWeather").append(windSpeed);
 
         // UV index 
         var lon = response.coord.lon;
@@ -88,30 +91,35 @@ searchButton.on("click", function (event) {
             console.log(response)
 
             for (var i = 0; i < response.list.length; i++) {
+                let box = $("<div>").attr({
+                    "class": "weatherBox"
+                });
+
                 // Date 
                 let hour = moment(response.list[i].dt_txt);
                 if (hour.hour() == 12) {
-                    let date = moment(response.list[i].dt_txt);
-                    $(".futureDates").append(date.format('MMMM Do YYYY'));
-
-                    // temperature
-                    var futureTemp = $("<p>");
-                    futureTemp.text(response.list[i].main.temp);
-                    var temps = (Math.round(futureTemp.text() * 100) / 100).toFixed(1);
-                    $(".futureWeather").append("Temperature: " + temps + "°C");
+                    let date = $("<h3>");
+                    date.text(moment(response.list[i].dt_txt).format('MMMM Do YYYY'));
+                    $(box).append(date);
 
                     // getting icon
                     var icon = $("<img />").attr({
                         "id": "icon",
                         "src": "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png",
                     });
-                    $(".futureWeather").append(icon);
+                    $(box).append(icon);
 
-                    //wind speed
-                    var futureWind = $("<p>");
-                    futureWind.text(response.list[i].wind.speed);
-                    $(".futureWeather").append("Wind Speed: " + futureWind.text() + " MPH");
+                    // temperature
+                    var futureTemp = $("<p>");
+                    futureTemp.text("Temperature: " + response.list[i].main.temp + "°C");
+                    $(box).append(futureTemp);
 
+                    // humidity
+                    var futureHumidity = $("<p>");
+                    futureHumidity.text("Humidity: " + response.list[i].main.humidity + "%");
+                    $(box).append(futureHumidity);
+
+                    $(".futureWeather").append(box);
                 }
             }
         });
@@ -123,7 +131,9 @@ displayButtons();
 function displayButtons() {
     for (var i = 0; i < cityList.length; i++) {
         localStorage.clear();
-        var search = $("<button>");
+        var search = $("<button>").attr({
+            "class": "cities"
+        });
         search.text(cityList[i]);
         // console.log(search.text(cityList[i]));
 

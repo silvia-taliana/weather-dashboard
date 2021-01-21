@@ -1,3 +1,112 @@
+/* header */
+h1 {
+    background-color: rgb(189, 122, 189);
+    color: black;
+    font-family: 'Architects Daughter', cursive;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: space-between;
+}
+
+/* search box */
+#searchBox {
+    background-color: pink;
+    border-radius: 10px;
+    margin: 10px;
+    width: 35%;
+    padding: 10px;
+}
+
+/* search text */
+.form-group label {
+    font-family: 'Architects Daughter', cursive;
+    font-weight: bold;   
+}
+
+#searchTerm {
+    position: relative;
+    float: left;
+    max-width: 75%;
+    margin-right: 10px;
+}
+
+/* search button */
+#searchButton {
+    background-color: rgb(189, 122, 189);
+    border-radius: 20px;
+    border-color: black;
+    border-width: 2px;
+    position: relative;
+    float: right;
+}
+
+/* search history */
+.cityList {
+    width: 200px;
+    height: 300px;
+    position: fixed;
+    top: 250px;
+}
+
+.cities {
+    background-color: peachpuff;
+    font-family: 'Architects Daughter', cursive;
+    border-radius: 10px;
+    width: 200px;
+}
+
+/* current weather */
+.currentWeather {
+    display: none;
+    background-color: #f3f33a;
+   width: 55%;
+   padding: 10px 0 10px 20px;
+   margin: 10px;
+   border-radius: 10px;
+   font-family: 'Architects Daughter', cursive;
+}
+
+.todaysDate {
+    font-size: 20px;
+    font-family: 'Architects Daughter', cursive;
+}
+
+img {
+    height: 40px;
+    width: 40px;
+}
+
+/* future weather */
+.futureWeather {
+   width: 100%;
+   margin-left: 20%;
+   display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    font-family: 'Architects Daughter', cursive;
+}
+
+.weatherBox {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: #4cd24c;
+}
+
+.futureWeather .weatherBox h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 /* classes for colour coding uv index */
 .extreme {
     background-color: rgb(192, 13, 192);
@@ -18,4 +127,3 @@
 .low {
     background-color: green;
 }
-
