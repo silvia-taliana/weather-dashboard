@@ -31,7 +31,7 @@ searchButton.on("click", function (event) {
         // getting icon
         var icon = $("<img />").attr({
             "id": "icon",
-            "src": "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png",
+            "src": "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png",
         });
         $(".currentWeather h2").append(icon);
 
